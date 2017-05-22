@@ -1,0 +1,11 @@
+---
+# Configuration for the {undefined} plugin by LegendsOfMCPE.
+
+# Whether to check if an economy plugin has been enabled in the server or not.
+Economy: true
+
+# The economy plugin to use by preference. Other plugins utilizing {undefined} will also use this plugin.
+# Dummy can be entered if an economy plugin should be attempted to be detected automatically.
+Economy-Plugin: Dummy
+
+...

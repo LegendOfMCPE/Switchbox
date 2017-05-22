@@ -1,5 +1,7 @@
+---
 name: Vault
 version: 0.1
 main: vault\VaultPlugin
 author: LegendsOfMCPE Team
 api: 1.8.0
+...
