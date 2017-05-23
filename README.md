@@ -1,7 +1,7 @@
 Switchbox 
 =====
 ###### For PocketMine-MP
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/LegendOfMCPE/Vault?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Poggit Status](https://poggit.pmmp.io/ci.badge/LegendOfMCPE/Switchbox/Switchbox)](https://poggit.pmmp.io/ci/LegendOfMcpe/Switchbox)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/LegendOfMCPE/Vault?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Poggit Status](https://poggit.pmmp.io/ci.shield/LegendOfMCPE/Switchbox/Switchbox)](https://poggit.pmmp.io/ci/LegendOfMcpe/Switchbox)
 
 A plugin similar to Vault, merging the API of several plugins in one plugin.
 
