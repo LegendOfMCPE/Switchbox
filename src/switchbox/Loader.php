@@ -19,7 +19,10 @@ class Loader extends PluginBase {
 
 		$this->setUpEconomy();
 	}
-
+	
+	/**
+	 * @return bool
+	 */
 	public function setUpEconomy(): bool {
 		if(!$this->getConfiguration()->isEconomyEnabled()) {
 			$this->economyEnabled = false;
