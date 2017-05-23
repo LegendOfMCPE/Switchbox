@@ -15,18 +15,22 @@ class xEconSwitch extends EconomyProvider {
 
 	protected $name = "xEcon";
 	protected $bankSupport = true;
+
+	/** @var XEcon */
 	private $plugin;
 
 	public function __construct(Loader $loader) {
 		parent::__construct($loader);
-		$this->plugin = $this->getPlugin();
+		if($this->getPlugin() instanceof XEcon) {
+			$this->plugin = $this->getPlugin();
+		}
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getCurrencySymbol(): string {
-		if($this->plugin instanceof XEcon) {
+		if($this->plugin->isEnabled()) {
 			// Need a way to check... Can't find one.
 		}
 		return "$";
@@ -38,7 +42,7 @@ class xEconSwitch extends EconomyProvider {
 	 * @return bool
 	 */
 	public function hasAccount(OfflinePlayer $player): bool {
-		if($this->plugin instanceof XEcon) {
+		if($this->plugin->isEnabled()) {
 			// Need a way to check... Can't find one.
 		}
 		return false;
@@ -50,7 +54,7 @@ class xEconSwitch extends EconomyProvider {
 	 * @return ProviderReply
 	 */
 	public function createAccount(OfflinePlayer $player): ProviderReply {
-		if($this->plugin instanceof XEcon) {
+		if($this->plugin->isEnabled()) {
 			// Accounts get created (semi) automatically... Not sure about this one.
 		}
 		return new ProviderReply(false);
@@ -62,7 +66,7 @@ class xEconSwitch extends EconomyProvider {
 	 * @return int
 	 */
 	public function get(OfflinePlayer $player): int {
-		if($this->plugin instanceof XEcon) {
+		if($this->plugin->isEnabled()) {
 			round($this->plugin->getPlayerEnt($player->getName())->getAccount(PlayerEnt::ACCOUNT_CASH)->getAmount());
 		}
 		return 0;
@@ -75,7 +79,7 @@ class xEconSwitch extends EconomyProvider {
 	 * @return bool
 	 */
 	public function has(OfflinePlayer $player, int $balance): bool {
-		if($this->plugin instanceof XEcon) {
+		if($this->plugin->isEnabled()) {
 			return $this->plugin->getPlayerEnt($player->getName())->getAccount(PlayerEnt::ACCOUNT_CASH)->canPay($balance);
 		}
 		return false;
@@ -88,7 +92,7 @@ class xEconSwitch extends EconomyProvider {
 	 * @return ProviderReply
 	 */
 	public function withdraw(OfflinePlayer $player, int $amount): ProviderReply {
-		if($this->plugin instanceof XEcon) {
+		if($this->plugin->isEnabled()) {
 			return new ProviderReply($this->plugin->getPlayerEnt($player->getName())->getAccount(PlayerEnt::ACCOUNT_CASH)->take($amount));
 		}
 		return new ProviderReply(false);
@@ -101,7 +105,7 @@ class xEconSwitch extends EconomyProvider {
 	 * @return ProviderReply
 	 */
 	public function deposit(OfflinePlayer $player, int $amount): ProviderReply {
-		if($this->plugin instanceof XEcon) {
+		if($this->plugin->isEnabled()) {
 			return new ProviderReply($this->plugin->getPlayerEnt($player->getName())->getAccount(PlayerEnt::ACCOUNT_CASH)->take($amount));
 		}
 		return new ProviderReply(false);
@@ -114,7 +118,7 @@ class xEconSwitch extends EconomyProvider {
 	 * @return ProviderReply
 	 */
 	public function createBank(OfflinePlayer $player, string $name = ""): ProviderReply {
-		if($this->plugin instanceof XEcon) {
+		if($this->plugin->isEnabled()) {
 			// Accounts get created (semi) automatically... Not sure about this one...
 		}
 		return new ProviderReply(false);
@@ -126,7 +130,7 @@ class xEconSwitch extends EconomyProvider {
 	 * @return bool
 	 */
 	public function hasBank(OfflinePlayer $player): bool {
-		if($this->plugin instanceof XEcon) {
+		if($this->plugin->isEnabled()) {
 			// Accounts get created (semi) automatically... Not sure about this one...
 		}
 		return false;
@@ -139,7 +143,7 @@ class xEconSwitch extends EconomyProvider {
 	 * @return ProviderReply
 	 */
 	public function deleteBank(OfflinePlayer $player, string $name = ""): ProviderReply {
-		if($this->plugin instanceof XEcon) {
+		if($this->plugin->isEnabled()) {
 			// Accounts get created (semi) automatically... Not sure about this one...
 		}
 		return new ProviderReply(false);
@@ -151,7 +155,7 @@ class xEconSwitch extends EconomyProvider {
 	 * @return int
 	 */
 	public function bankGet(OfflinePlayer $player): int {
-		if($this->plugin instanceof XEcon) {
+		if($this->plugin->isEnabled()) {
 			return $this->plugin->getPlayerEnt($player->getName())->getAccount(PlayerEnt::ACCOUNT_BANK)->getAmount();
 		}
 		return 0;
@@ -164,7 +168,7 @@ class xEconSwitch extends EconomyProvider {
 	 * @return bool
 	 */
 	public function bankHas(OfflinePlayer $player, int $amount): bool {
-		if($this->plugin instanceof XEcon) {
+		if($this->plugin->isEnabled()) {
 			return $this->plugin->getPlayerEnt($player->getName())->getAccount(PlayerEnt::ACCOUNT_BANK)->canPay($amount);
 		}
 		return false;
@@ -177,7 +181,7 @@ class xEconSwitch extends EconomyProvider {
 	 * @return ProviderReply
 	 */
 	public function bankWithdraw(OfflinePlayer $player, int $amount): ProviderReply {
-		if($this->plugin instanceof XEcon) {
+		if($this->plugin->isEnabled()) {
 			return new ProviderReply($this->plugin->getPlayerEnt($player->getName())->getAccount(PlayerEnt::ACCOUNT_BANK)->take($amount));
 		}
 		return new ProviderReply(false);
@@ -190,7 +194,7 @@ class xEconSwitch extends EconomyProvider {
 	 * @return ProviderReply
 	 */
 	public function bankDeposit(OfflinePlayer $player, int $amount): ProviderReply {
-		if($this->plugin instanceof XEcon) {
+		if($this->plugin->isEnabled()) {
 			return new ProviderReply($this->plugin->getPlayerEnt($player->getName())->getAccount(PlayerEnt::ACCOUNT_BANK)->add($amount));
 		}
 		return new ProviderReply(false);

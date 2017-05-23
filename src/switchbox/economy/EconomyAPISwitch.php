@@ -13,18 +13,22 @@ class EconomyAPISwitch extends EconomyProvider {
 
 	protected $name = "EconomyAPI";
 	protected $bankSupport = false;
+
+	/** @var EconomyAPI */
 	private $plugin;
 
 	public function __construct(Loader $loader) {
 		parent::__construct($loader);
-		$this->plugin = $this->getPlugin();
+		if($this->getPlugin() instanceof EconomyAPI) {
+			$this->plugin = $this->getPlugin();
+		}
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getCurrencySymbol(): string {
-		if($this->plugin instanceof EconomyAPI) {
+		if($this->plugin->isEnabled()) {
 			return $this->plugin->getMonetaryUnit();
 		}
 		return "$";
@@ -36,7 +40,7 @@ class EconomyAPISwitch extends EconomyProvider {
 	 * @return bool
 	 */
 	public function hasAccount(OfflinePlayer $player): bool {
-		if($this->plugin instanceof EconomyAPI) {
+		if($this->plugin->isEnabled()) {
 			return $this->plugin->accountExists($player->getName());
 		}
 		return false;
@@ -48,7 +52,7 @@ class EconomyAPISwitch extends EconomyProvider {
 	 * @return ProviderReply
 	 */
 	public function createAccount(OfflinePlayer $player): ProviderReply {
-		if($this->plugin instanceof EconomyAPI) {
+		if($this->plugin->isEnabled()) {
 			return new ProviderReply($this->plugin->createAccount($player->getName()));
 		}
 		return new ProviderReply(false);
@@ -60,7 +64,7 @@ class EconomyAPISwitch extends EconomyProvider {
 	 * @return int
 	 */
 	public function get(OfflinePlayer $player): int {
-		if($this->plugin instanceof EconomyAPI) {
+		if($this->plugin->isEnabled()) {
 			return $this->plugin->myMoney($player->getName());
 		}
 		return 0;
@@ -73,7 +77,7 @@ class EconomyAPISwitch extends EconomyProvider {
 	 * @return bool
 	 */
 	public function has(OfflinePlayer $player, int $balance): bool {
-		if($this->plugin instanceof EconomyAPI) {
+		if($this->plugin->isEnabled()) {
 			return $this->plugin->myMoney($player->getName()) >= $balance;
 		}
 		return false;
@@ -86,7 +90,7 @@ class EconomyAPISwitch extends EconomyProvider {
 	 * @return ProviderReply
 	 */
 	public function withdraw(OfflinePlayer $player, int $amount): ProviderReply {
-		if($this->plugin instanceof EconomyAPI) {
+		if($this->plugin->isEnabled()) {
 			return new ProviderReply($this->plugin->reduceMoney($player->getName(), $amount));
 		}
 		return new ProviderReply(false);
@@ -99,7 +103,7 @@ class EconomyAPISwitch extends EconomyProvider {
 	 * @return ProviderReply
 	 */
 	public function deposit(OfflinePlayer $player, int $amount): ProviderReply {
-		if($this->plugin instanceof EconomyAPI) {
+		if($this->plugin->isEnabled()) {
 			return new ProviderReply($this->plugin->addMoney($player->getName(), $amount));
 		}
 		return new ProviderReply(false);
@@ -204,7 +208,7 @@ class EconomyAPISwitch extends EconomyProvider {
 	 * @return array
 	 */
 	public function getAllMoney(): array {
-		if($this->plugin instanceof EconomyAPI) {
+		if($this->plugin->isEnabled()) {
 			return $this->plugin->getAllMoney();
 		}
 		return [];
