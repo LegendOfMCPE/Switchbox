@@ -46,12 +46,12 @@ class PluginSwitcher {
 				return $this->selectEconomy($loader, "Dummy");
 			}
 			$ecoSwitch = $this->economySwitches[$ecoPlugin->getName()];
-			return new $ecoSwitch($loader);
+			return new $ecoSwitch($loader, $ecoPlugin);
 		}
 		foreach($loader->getServer()->getPluginManager()->getPlugins() as $plugin) {
 			if(in_array($plugin->getName(), array_keys($this->economySwitches))) {
 				$ecoSwitch = $this->economySwitches[$plugin->getName()];
-				return new $ecoSwitch($loader);
+				return new $ecoSwitch($loader, $plugin);
 			}
 		}
 		return new EmptySwitch($loader);

@@ -2,7 +2,9 @@
 
 namespace switchbox\economy;
 
+use onebone\economyapi\EconomyAPI;
 use pocketmine\OfflinePlayer;
+use pocketmine\plugin\Plugin;
 use switchbox\api\economy\EconomyProvider;
 use switchbox\api\ProviderReply;
 use switchbox\Loader;
@@ -10,84 +12,201 @@ use switchbox\Loader;
 class EconomyAPISwitch extends EconomyProvider {
 
 	protected $name = "EconomyAPI";
+	protected $bankSupport = false;
+	private $plugin;
 
 	public function __construct(Loader $loader) {
 		parent::__construct($loader);
+		$this->plugin = $this->getPlugin();
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getCurrencySymbol(): string {
-		// TODO: Implement getCurrencySymbol() method.
+		if($this->plugin instanceof EconomyAPI) {
+			return $this->plugin->getMonetaryUnit();
+		}
+		return "$";
 	}
 
-	public function getCurrencyPlural(): string {
-		// TODO: Implement getCurrencyPlural() method.
-	}
-
-	public function getCurrencySingular(): string {
-		// TODO: Implement getCurrencySingular() method.
-	}
-
+	/**
+	 * @param OfflinePlayer $player
+	 *
+	 * @return bool
+	 */
 	public function hasAccount(OfflinePlayer $player): bool {
-		// TODO: Implement hasAccount() method.
+		if($this->plugin instanceof EconomyAPI) {
+			return $this->plugin->accountExists($player->getName());
+		}
+		return false;
 	}
 
+	/**
+	 * @param OfflinePlayer $player
+	 *
+	 * @return ProviderReply
+	 */
 	public function createAccount(OfflinePlayer $player): ProviderReply {
-		// TODO: Implement createAccount() method.
+		if($this->plugin instanceof EconomyAPI) {
+			return new ProviderReply($this->plugin->createAccount($player->getName()));
+		}
+		return new ProviderReply(false);
 	}
 
+	/**
+	 * @param OfflinePlayer $player
+	 *
+	 * @return int
+	 */
 	public function get(OfflinePlayer $player): int {
-		// TODO: Implement get() method.
+		if($this->plugin instanceof EconomyAPI) {
+			return $this->plugin->myMoney($player->getName());
+		}
+		return 0;
 	}
 
+	/**
+	 * @param OfflinePlayer $player
+	 * @param int           $balance
+	 *
+	 * @return bool
+	 */
 	public function has(OfflinePlayer $player, int $balance): bool {
-		// TODO: Implement has() method.
+		if($this->plugin instanceof EconomyAPI) {
+			return $this->plugin->myMoney($player->getName()) >= $balance;
+		}
+		return false;
 	}
 
+	/**
+	 * @param OfflinePlayer $player
+	 * @param int           $amount
+	 *
+	 * @return ProviderReply
+	 */
 	public function withdraw(OfflinePlayer $player, int $amount): ProviderReply {
-		// TODO: Implement withdraw() method.
+		if($this->plugin instanceof EconomyAPI) {
+			return new ProviderReply($this->plugin->reduceMoney($player->getName(), $amount));
+		}
+		return new ProviderReply(false);
 	}
 
+	/**
+	 * @param OfflinePlayer $player
+	 * @param int           $amount
+	 *
+	 * @return ProviderReply
+	 */
 	public function deposit(OfflinePlayer $player, int $amount): ProviderReply {
-		// TODO: Implement deposit() method.
+		if($this->plugin instanceof EconomyAPI) {
+			return new ProviderReply($this->plugin->addMoney($player->getName(), $amount));
+		}
+		return new ProviderReply(false);
 	}
 
+	/**
+	 * @param OfflinePlayer $player
+	 * @param string        $name
+	 *
+	 * @return ProviderReply
+	 */
 	public function createBank(OfflinePlayer $player, string $name = ""): ProviderReply {
-		// TODO: Implement createBank() method.
+		return new ProviderReply(false);
 	}
 
+	/**
+	 * @param OfflinePlayer $player
+	 *
+	 * @return bool
+	 */
 	public function hasBank(OfflinePlayer $player): bool {
-		// TODO: Implement hasBank() method.
+		return false;
 	}
 
+	/**
+	 * @param OfflinePlayer $player
+	 * @param string        $name
+	 *
+	 * @return ProviderReply
+	 */
 	public function deleteBank(OfflinePlayer $player, string $name = ""): ProviderReply {
-		// TODO: Implement deleteBank() method.
+		return new ProviderReply(false);
 	}
 
+	/**
+	 * @param OfflinePlayer $player
+	 *
+	 * @return int
+	 */
 	public function bankGet(OfflinePlayer $player): int {
-		// TODO: Implement bankGet() method.
+		return 0;
 	}
 
+	/**
+	 * @param OfflinePlayer $player
+	 * @param int           $amount
+	 *
+	 * @return bool
+	 */
 	public function bankHas(OfflinePlayer $player, int $amount): bool {
-		// TODO: Implement bankHas() method.
+		return false;
 	}
 
+	/**
+	 * @param OfflinePlayer $player
+	 * @param int           $amount
+	 *
+	 * @return ProviderReply
+	 */
 	public function bankWithdraw(OfflinePlayer $player, int $amount): ProviderReply {
-		// TODO: Implement bankWithdraw() method.
+		return new ProviderReply(false);
 	}
 
+	/**
+	 * @param OfflinePlayer $player
+	 * @param int           $amount
+	 *
+	 * @return ProviderReply
+	 */
 	public function bankDeposit(OfflinePlayer $player, int $amount): ProviderReply {
-		// TODO: Implement bankDeposit() method.
+		return new ProviderReply(false);
 	}
 
+	/**
+	 * @param OfflinePlayer $player
+	 * @param string        $bankName
+	 *
+	 * @return bool
+	 */
 	public function isBankOwner(OfflinePlayer $player, string $bankName): bool {
-		// TODO: Implement isBankOwner() method.
+		return false;
 	}
 
+	/**
+	 * @param OfflinePlayer $player
+	 * @param string        $bankName
+	 *
+	 * @return bool
+	 */
 	public function isBankMember(OfflinePlayer $player, string $bankName): bool {
-		// TODO: Implement isBankMember() method.
+		return false;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getAllBanks(): array {
-		// TODO: Implement getAllBanks() method.
+		return [];
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getAllMoney(): array {
+		if($this->plugin instanceof EconomyAPI) {
+			return $this->plugin->getAllMoney();
+		}
+		return [];
 	}
 }

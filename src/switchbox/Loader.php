@@ -40,6 +40,9 @@ class Loader extends PluginBase {
 		return $this->configuration;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isEconomyEnabled(): bool {
 		return $this->economyEnabled;
 	}

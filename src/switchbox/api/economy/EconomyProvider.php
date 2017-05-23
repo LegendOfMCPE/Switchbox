@@ -3,13 +3,14 @@
 namespace switchbox\api\economy;
 
 use pocketmine\OfflinePlayer;
+use pocketmine\plugin\Plugin;
 use switchbox\api\BaseProvider;
 use switchbox\api\ProviderReply;
 use switchbox\Loader;
 
 abstract class EconomyProvider extends BaseProvider {
 
-	private $bankSupport = false;
+	protected $bankSupport = false;
 
 	public function __construct(Loader $loader) {
 		parent::__construct($loader);
@@ -30,20 +31,6 @@ abstract class EconomyProvider extends BaseProvider {
 	 * @return string
 	 */
 	public abstract function getCurrencySymbol(): string;
-
-	/**
-	 * Returns the plural name of the currency used in the current economy plugin.
-	 *
-	 * @return string
-	 */
-	public abstract function getCurrencyPlural(): string;
-
-	/**
-	 * Returns the singular name of the currency used in the current economy plugin.
-	 *
-	 * @return string
-	 */
-	public abstract function getCurrencySingular(): string;
 
 	/**
 	 * Returns whether the given OFFLINE player has an economy account with the current economy plugin.
@@ -206,4 +193,11 @@ abstract class EconomyProvider extends BaseProvider {
 	 * @return array
 	 */
 	public abstract function getAllBanks(): array;
+
+	/**
+	 * Returns an array containing all money.
+	 *
+	 * @return array
+	 */
+	public abstract function getAllMoney(): array;
 }
