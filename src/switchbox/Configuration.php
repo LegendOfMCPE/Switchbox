@@ -16,7 +16,10 @@ class Configuration {
 		$data = yaml_parse_file($loader->getDataFolder() . "config.yml");
 		$this->setUpData($data);
 	}
-
+	
+	/**
+	 * @param array $data
+	 */
 	public function setUpData(array $data) {
 		$this->setEconomyEnabled($data["Economy"]);
 		$this->economyPlugin = $data["Economy-Plugin"];
