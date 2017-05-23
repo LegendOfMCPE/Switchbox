@@ -2,6 +2,6 @@
 branches:
 - master
 projects:
-  Vault:
-    path: ""
+  Switchbox:
+    projectId: 475
 ...
