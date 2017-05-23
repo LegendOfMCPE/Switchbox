@@ -1,9 +1,9 @@
 <?php
 
-namespace vault\api\chat;
+namespace switchbox\api\economy;
 
-use vault\api\BaseProvider;
-use vault\Loader;
+use switchbox\api\BaseProvider;
+use switchbox\Loader;
 
 abstract class ChatProvider extends BaseProvider {
 

@@ -1,13 +1,17 @@
 <?php
 
-namespace vault;
+namespace switchbox;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
+use switchbox\switcher\PluginSwitcher;
 
 class Loader extends PluginBase {
 
 	private $configuration;
+	private $economy;
+
+	private $economyEnabled = true;
 
 	public function onEnable() {
 		$this->saveResource("config.yml");
@@ -18,16 +22,15 @@ class Loader extends PluginBase {
 
 	public function setUpEconomy(): bool {
 		if(!$this->getConfiguration()->isEconomyEnabled()) {
+			$this->economyEnabled = false;
 			return false;
 		}
-		if(($ecoPlugin = $this->getServer()->getPluginManager()->getPlugin($this->getConfiguration()->getEconomyPlugin())) === null || $ecoPlugin->isDisabled()) {
-			$this->getLogger()->warning(TextFormat::RED . "The selected economy plugin could not be found in {undefined}!" . PHP_EOL . "Checking for available economy plugins...");
-			$result = false;
-		} else {
-			$result = true;
+		$pluginSwitcher = new PluginSwitcher($this, $this->getConfiguration()->getPluginPreferences());
+		if($pluginSwitcher->getEconomy() === false) {
+			$this->economyEnabled = false;
 		}
-		// TODO: Finish this when I start actually implementing things.
-		return $result;
+		$this->economy = $pluginSwitcher->getEconomy();
+		return true;
 	}
 
 	/**
@@ -35,5 +38,9 @@ class Loader extends PluginBase {
 	 */
 	public function getConfiguration(): Configuration {
 		return $this->configuration;
+	}
+
+	public function isEconomyEnabled(): bool {
+		return $this->economyEnabled;
 	}
 }

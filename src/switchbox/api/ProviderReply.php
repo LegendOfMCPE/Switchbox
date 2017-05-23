@@ -1,6 +1,6 @@
 <?php
 
-namespace vault\api;
+namespace switchbox\api;
 
 
 class ProviderReply {

@@ -1,8 +1,8 @@
 <?php
 
-namespace vault\api;
+namespace switchbox\api;
 
-use vault\Loader;
+use switchbox\Loader;
 
 abstract class BaseProvider {
 
@@ -10,6 +10,7 @@ abstract class BaseProvider {
 
 	protected $name;
 	protected $isEnabled = false;
+	protected $empty = false;
 
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
@@ -42,5 +43,12 @@ abstract class BaseProvider {
 	 */
 	public function isEnabled(): bool {
 		return $this->isEnabled;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isEmpty(): bool {
+		return $this->empty;
 	}
 }

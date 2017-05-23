@@ -1,6 +1,6 @@
 <?php
 
-namespace vault\api\permission;
+namespace switchbox\api\permission;
 
 
 abstract class PermissionProvider {

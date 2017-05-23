@@ -1,6 +1,6 @@
 <?php
 
-namespace vault;
+namespace switchbox;
 
 
 class Configuration {
@@ -18,8 +18,15 @@ class Configuration {
 	}
 
 	public function setUpData(array $data) {
-		$this->economyEnabled = $data["Economy"];
+		$this->setEconomyEnabled($data["Economy"]);
 		$this->economyPlugin = $data["Economy-Plugin"];
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getPluginPreferences(): array {
+		return ["Economy" => $this->getEconomyPlugin()];
 	}
 
 	/**
@@ -27,6 +34,13 @@ class Configuration {
 	 */
 	public function isEconomyEnabled(): bool {
 		return $this->economyEnabled;
+	}
+
+	/**
+	 * @param bool $value
+	 */
+	public function setEconomyEnabled(bool $value = true) {
+		$this->economyEnabled = $value;
 	}
 
 	/**

@@ -1,5 +1,5 @@
 ---
-# Configuration for the {undefined} plugin by LegendsOfMCPE.
+# Configuration for the Switchbox plugin by LegendsOfMCPE.
 
 # Whether to check if an economy plugin has been enabled in the server or not.
 Economy: true
