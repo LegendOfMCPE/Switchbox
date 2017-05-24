@@ -77,7 +77,7 @@ class Switchbox extends PluginBase implements Listener {
 			$requirement = (array) $requirement;
 			switch($type) {
 				case "Economy":
-					if(!isset($requirement[$this->getEconomyProvider()->getName()])) {
+					if(!in_array($this->getEconomyProvider()->getName(), $requirement)) {
 						$this->getLogger()->alert(
 							"The plugin " . $plugin->getName() . " requires the economy plugin " . $requirement . " to work correctly." . PHP_EOL .
 							"Consider using " . $requirement . " to get the most out of " . $plugin->getName() . ".");
@@ -88,7 +88,7 @@ class Switchbox extends PluginBase implements Listener {
 					}
 					break;
 				case "Chat":
-					if(!sset($requirement[$this->getChatProvider()->getName()])) {
+					if(!in_array($this->getChatProvider()->getName(), $requirement)) {
 						$this->getLogger()->alert(
 							"The plugin " . $plugin->getName() . " requires the chat plugin " . $requirement . " to work correctly." . PHP_EOL .
 							"Consider using " . $requirement . " to get the most out of " . $plugin->getName() . ".");
