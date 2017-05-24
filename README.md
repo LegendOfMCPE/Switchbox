@@ -12,9 +12,8 @@ Switchbox is still very much in development, and no API documentation is availab
 Switchbox provides abstraction for the following plugins.  
   
 #### Economy
-* EconomyAPI (https://poggit.pmmp.io/p/EconomyAPI/)  
-* xEcon
+* [EconomyAPI](https://poggit.pmmp.io/p/EconomyAPI/)  
 
 #### Chat
-* EssentialsPE
+* [EssentialsPE](https://poggit.pmmp.io/p/EssentialsPE/)  
 

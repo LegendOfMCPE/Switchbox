@@ -1,7 +1,19 @@
 <?php
 
-namespace switchbox;
+/*
+ *
+ * Switchbox
+ *
+ * Copyright (C) 2017 LegendsOfMCPE Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+*/
 
+namespace switchbox;
 
 class Configuration {
 
@@ -20,7 +32,7 @@ class Configuration {
 	 */
 	private function setUpData(array $data) {
 		$this->economyPluginName = (string) ($data["Economy-Plugin"] ? : "Dummy");
-		$this->economyPrefs = array_change_key_case((array) ($data["Economy-Economy-Providers"] ? : []), CASE_LOWER);
+		$this->economyPrefs = array_change_key_case((array) ($data["Special-Economy-Providers"] ? : []), CASE_LOWER);
 		$this->chatPluginName = (string) ($data["Chat-Plugin"] ? : "Dummy");
 		$this->chatPrefs = array_change_key_case((array) ($data["Special-Chat-Providers"] ? : []), CASE_LOWER);
 	}
