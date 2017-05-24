@@ -1,7 +1,7 @@
 ---
 name: Switchbox
 version: 0.1.0
-main: switchbox\Loader
+main: switchbox\Switchbox
 author: LegendsOfMCPE Team
 api: [3.0.0-ALPHA5, 3.0.0-ALPHA6]
 ...
