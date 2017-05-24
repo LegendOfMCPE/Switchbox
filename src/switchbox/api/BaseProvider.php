@@ -3,29 +3,12 @@
 namespace switchbox\api;
 
 use pocketmine\plugin\Plugin;
-use switchbox\Loader;
+use pocketmine\Server;
 
 abstract class BaseProvider {
 
-	private $loader;
-
-	protected $name = "";
-	protected $isEnabled = false;
-	protected $empty = false;
-
-	public function __construct(Loader $loader) {
-		$this->loader = $loader;
-
-		if($this->getPlugin()->isEnabled()) {
-			$this->isEnabled = true;
-		}
-	}
-
-	/**
-	 * @return Loader
-	 */
-	private function getLoader(): Loader {
-		return $this->loader;
+	protected function __construct(Server $server) {
+		// TODO implement whatever appropriate here
 	}
 
 	/**
@@ -34,31 +17,8 @@ abstract class BaseProvider {
 	 * @return string
 	 */
 	public function getName(): string {
-		return $this->name;
+		return $this->getPlugin()->getName();
 	}
 
-	/**
-	 * Checks if the current provider is enabled.
-	 *
-	 * @return boolean
-	 */
-	public function isEnabled(): bool {
-		return $this->isEnabled;
-	}
-
-	/**
-	 * Returns the plugin of the provider.
-	 *
-	 * @return Plugin
-	 */
-	public function getPlugin(): Plugin {
-		return $this->getLoader()->getServer()->getPluginManager()->getPlugin($this->getName());
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function isEmpty(): bool {
-		return $this->empty;
-	}
+	public abstract function getPlugin(): Plugin;
 }

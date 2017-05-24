@@ -1,19 +1,18 @@
 <?php
 
-namespace switchbox\api\economy;
+namespace switchbox\api\chat;
 
-use pocketmine\level\Level;
 use pocketmine\OfflinePlayer;
+use pocketmine\Server;
 use switchbox\api\BaseProvider;
 use switchbox\api\ProviderReply;
-use switchbox\Loader;
 
 abstract class ChatProvider extends BaseProvider {
 
 	protected $groupSupport = false;
 
-	public function __construct(Loader $loader) {
-		parent::__construct($loader);
+	public function __construct(Server $server) {
+		parent::__construct($server);
 	}
 
 	/**

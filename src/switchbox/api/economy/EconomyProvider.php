@@ -3,17 +3,16 @@
 namespace switchbox\api\economy;
 
 use pocketmine\OfflinePlayer;
-use pocketmine\plugin\Plugin;
+use pocketmine\Server;
 use switchbox\api\BaseProvider;
 use switchbox\api\ProviderReply;
-use switchbox\Loader;
 
 abstract class EconomyProvider extends BaseProvider {
 
 	protected $bankSupport = false;
 
-	public function __construct(Loader $loader) {
-		parent::__construct($loader);
+	public function __construct(Server $server) {
+		parent::__construct($server);
 	}
 
 	/**

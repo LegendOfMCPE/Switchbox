@@ -3,11 +3,11 @@
 namespace switchbox\permission;
 
 use switchbox\api\permission\PermissionProvider;
-use switchbox\Loader;
+use PurePerms\PurePerms;
 
 class PurePermsSwitch extends PermissionProvider {
 
-	public function __construct(Loader $loader) {
-		parent::__construct($loader);
+	public function __construct(PurePerms $plugin) {
+		parent::__construct($plugin->getServer());
 	}
 }

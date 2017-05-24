@@ -4,10 +4,9 @@ namespace switchbox\economy;
 
 use onebone\economyapi\EconomyAPI;
 use pocketmine\OfflinePlayer;
-use pocketmine\plugin\Plugin;
 use switchbox\api\economy\EconomyProvider;
 use switchbox\api\ProviderReply;
-use switchbox\Loader;
+use switchbox\Switchbox;
 
 class EconomyAPISwitch extends EconomyProvider {
 
@@ -17,7 +16,7 @@ class EconomyAPISwitch extends EconomyProvider {
 	/** @var EconomyAPI */
 	private $plugin;
 
-	public function __construct(Loader $loader) {
+	public function __construct(Switchbox $loader) {
 		parent::__construct($loader);
 		if($this->getPlugin() instanceof EconomyAPI) {
 			$this->plugin = $this->getPlugin();

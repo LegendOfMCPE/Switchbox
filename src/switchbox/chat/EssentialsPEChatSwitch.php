@@ -4,12 +4,12 @@ namespace vault\chat;
 
 use EssentialsPE\Sessions\SessionManager;
 use pocketmine\OfflinePlayer;
-use switchbox\api\economy\ChatProvider;
+use switchbox\api\chat\ChatProvider;
 use switchbox\api\ProviderReply;
-use switchbox\Loader;
+use switchbox\Switchbox;
 use xecon\Session;
 
-class EssentialsPESwitch extends ChatProvider {
+class EssentialsPEChatSwitch extends ChatProvider {
 
 	protected $groupSupport = false;
 	protected $name = "EssentialsPE";
@@ -17,11 +17,9 @@ class EssentialsPESwitch extends ChatProvider {
 	/** @var \EssentialsPE\Loader */
 	private $plugin;
 
-	public function __construct(Loader $loader) {
-		parent::__construct($loader);
-		if($this->getPlugin() instanceof \EssentialsPE\Loader) {
-			$this->plugin = $this->getPlugin();
-		}
+	public function __construct(\EssentialsPE\Loader $loader) {
+		$this->plugin = $loader;
+		parent::__construct($loader->getServer());
 	}
 
 	/**

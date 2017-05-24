@@ -5,83 +5,45 @@ namespace switchbox;
 
 class Configuration {
 
-	private $loader;
+	private $economyPluginName;
+	private $economyPrefs;
+	private $chatPluginName;
+	private $chatPrefs;
 
-	private $economyEnabled = true;
-	private $economyPlugin = "Dummy";
-	private $chatEnabled = true;
-	private $chatPlugin = "Dummy";
-
-	public function __construct(Loader $loader) {
-		$this->loader = $loader;
-
+	public function __construct(Switchbox $loader) {
 		$data = yaml_parse_file($loader->getDataFolder() . "config.yml");
 		$this->setUpData($data);
 	}
-	
+
 	/**
 	 * @param array $data
 	 */
-	public function setUpData(array $data) {
-		$this->setEconomyEnabled($data["Economy"]);
-		$this->economyPlugin = $data["Economy-Plugin"];
-		$this->setChatEnabled($data["Chat"]);
-		$this->chatPlugin = $data["Chat-Plugin"];
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getPluginPreferences(): array {
-		return ["Economy" => $this->getEconomyPlugin()];
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function isEconomyEnabled(): bool {
-		return $this->economyEnabled;
-	}
-
-	/**
-	 * @param bool $value
-	 */
-	public function setEconomyEnabled(bool $value = true) {
-		$this->economyEnabled = $value;
+	private function setUpData(array $data) {
+		$this->economyPluginName = (string) ($data["Economy-Plugin"] ? : "Dummy");
+		$this->economyPrefs = array_change_key_case((array) ($data["Economy-Economy-Providers"] ? : []), CASE_LOWER);
+		$this->chatPluginName = (string) ($data["Chat-Plugin"] ? : "Dummy");
+		$this->chatPrefs = array_change_key_case((array) ($data["Special-Chat-Providers"] ? : []), CASE_LOWER);
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getEconomyPlugin(): string {
-		return $this->economyPlugin;
+	public function getEconomyPluginName(): string {
+		return $this->economyPluginName;
 	}
 
-	/**
-	 * @return bool
-	 */
-	public function isChatEnabled(): bool {
-		return $this->chatEnabled;
-	}
-
-	/**
-	 * @param bool $value
-	 */
-	public function setChatEnabled(bool $value = true) {
-		$this->chatEnabled = $value;
+	public function getEconomyPrefs(): array {
+		return $this->economyPrefs;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getChatPlugin(): string {
-		return $this->chatPlugin;
+	public function getChatPluginName(): string {
+		return $this->chatPluginName;
 	}
 
-	/**
-	 * @return Loader
-	 */
-	public function getLoader(): Loader {
-		return $this->loader;
+	public function getChatPrefs(): array {
+		return $this->chatPrefs;
 	}
 }
