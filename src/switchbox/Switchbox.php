@@ -134,6 +134,11 @@ class Switchbox extends PluginBase implements Listener {
 		return $this->configuration;
 	}
 
+	/**
+	 * @param string $type
+	 * @param string $class
+	 * @param Plugin $plugin
+	 */
 	public function registerProvider(string $type, string $class, Plugin $plugin) {
 		if(!isset($this->providers[$type])) {
 			throw new \InvalidArgumentException("Invalid type given, please use one of the constants");
@@ -144,6 +149,10 @@ class Switchbox extends PluginBase implements Listener {
 		$registry->validate($type);
 	}
 
+	/**
+	 * @param string $type
+	 * @param string $name
+	 */
 	private function getProviderByName(string $type, string $name) {
 		if(!isset($this->providers[$type])) {
 			throw new \InvalidArgumentException("Unknown type '$type'");
@@ -156,6 +165,9 @@ class Switchbox extends PluginBase implements Listener {
 		return $registry->instantiate();
 	}
 
+	/**
+	 * @internal
+	 */
 	private function registerDefaults() {
 		$data = [
 			[Switchbox::TYPE_ECONOMY, DummyEconomySwitch::class, "Switchbox"],

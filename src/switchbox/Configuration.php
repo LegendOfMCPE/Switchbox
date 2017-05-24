@@ -44,6 +44,9 @@ class Configuration {
 		return $this->economyPluginName;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getEconomyPrefs(): array {
 		return $this->economyPrefs;
 	}
@@ -55,6 +58,9 @@ class Configuration {
 		return $this->chatPluginName;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getChatPrefs(): array {
 		return $this->chatPrefs;
 	}
