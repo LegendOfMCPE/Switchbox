@@ -31,31 +31,50 @@ class Loader extends PluginBase {
 	 *
 	 * To add required plugins to your plugin, you can add the following method (example):
 	 * public function _require(): array {
-	 *   return ["EssentialsPE", "EconomyAPI"];
+	 *   return ["Chat" => ["EssentialsPE", "PureChat"], "Economy" => "EconomyAPI"];
 	 * }
 	 * If this method is added, the requirements will be checked once hint($this) gets called. Make sure to AT LEAST have soft depend on Switchbox.
 	 * It is recommended to call hint($this) on startup.
+	 *
+	 * NOTE: Plugins should only be added to _require() if those plugins are the only plugins that have implemented these functions.
 	 *
 	 * @param PluginBase $plugin
 	 * @param bool       $forceDisable
 	 *
 	 * @return bool
 	 */
-	public function hint(PluginBase $plugin, bool $forceDisable = false) {
+	public function hint(PluginBase $plugin, bool $forceDisable = false): bool {
 		if(method_exists($plugin, "_require")) {
 			/** @var string[] $requirements */
 			$requirements = $plugin->_require();
-			foreach($requirements as $requirement) {
-				if($requirement !== $this->getEconomy()->getName() && $requirement !== $this->getChat()->getName()) {
-					$this->getLogger()->alert(
-						"The plugin " . $plugin->getName() . " requires " . $requirement . " to work correctly." . PHP_EOL .
-						"Consider using " . $requirement . " to get the most out of " . $plugin->getName() . ".");
-					if($forceDisable) {
-						$plugin->setEnabled(false);
-						return true;
-					}
+			foreach($requirements as $type => $requirement) {
+				$requirement = (array) $requirement;
+				switch($type) {
+					case "Economy":
+						if(!in_array($this->getEconomy()->getName(), $requirement)) {
+							$this->getLogger()->alert(
+								"The plugin " . $plugin->getName() . " requires the economy plugin " . $requirement . " to work correctly." . PHP_EOL .
+								"Consider using " . $requirement . " to get the most out of " . $plugin->getName() . ".");
+							if($forceDisable) {
+								$plugin->setEnabled(false);
+								return true;
+							}
+						}
+						break;
+					case "Chat":
+						if(!in_array($this->getChat()->getName(), $requirement)) {
+							$this->getLogger()->alert(
+								"The plugin " . $plugin->getName() . " requires the chat plugin " . $requirement . " to work correctly." . PHP_EOL .
+								"Consider using " . $requirement . " to get the most out of " . $plugin->getName() . ".");
+							if($forceDisable) {
+								$plugin->setEnabled(false);
+								return true;
+							}
+						}
+						break;
 				}
 			}
+			return true;
 		}
 		return false;
 	}

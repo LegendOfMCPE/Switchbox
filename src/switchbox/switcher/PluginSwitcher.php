@@ -35,7 +35,7 @@ class PluginSwitcher {
 
 		$this->chat = $this->selectChat($loader, $chatPlugin);
 		if($this->chat instanceof EmptySwitch) {
-			$loader->getLogger()->alert("No chat plugin could be found. Disabling economy support.");
+			$loader->getLogger()->alert("No chat plugin could be found. Disabling chat support.");
 			$loader->getConfiguration()->setEconomyEnabled(false);
 		}
 	}
