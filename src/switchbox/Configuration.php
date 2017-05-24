@@ -9,6 +9,8 @@ class Configuration {
 
 	private $economyEnabled = true;
 	private $economyPlugin = "Dummy";
+	private $chatEnabled = true;
+	private $chatPlugin = "Dummy";
 
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
@@ -23,6 +25,8 @@ class Configuration {
 	public function setUpData(array $data) {
 		$this->setEconomyEnabled($data["Economy"]);
 		$this->economyPlugin = $data["Economy-Plugin"];
+		$this->setChatEnabled($data["Chat"]);
+		$this->chatPlugin = $data["Chat-Plugin"];
 	}
 
 	/**
@@ -51,6 +55,27 @@ class Configuration {
 	 */
 	public function getEconomyPlugin(): string {
 		return $this->economyPlugin;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isChatEnabled(): bool {
+		return $this->chatEnabled;
+	}
+
+	/**
+	 * @param bool $value
+	 */
+	public function setChatEnabled(bool $value = true) {
+		$this->chatEnabled = $value;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getChatPlugin(): string {
+		return $this->chatPlugin;
 	}
 
 	/**

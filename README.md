@@ -15,3 +15,6 @@ Switchbox provides abstraction for the following plugins.
 * EconomyAPI (https://poggit.pmmp.io/p/EconomyAPI/)  
 * xEcon
 
+#### Chat
+* EssentialsPE
+

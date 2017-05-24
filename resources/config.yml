@@ -8,4 +8,10 @@ Economy: true
 # Dummy can be entered if an economy plugin should be attempted to be detected automatically.
 Economy-Plugin: Dummy
 
+# Whether to check if a chat plugin has been enabled in the server or not.
+Chat: true
+
+# The chat plugin to use by preference. Other plugins utilizing Switchbox will also use this plugin.
+# Dummy can be entered if a chat plugin should be attempted to be detected automatically.
+Chat-Plugin: Dummy
 ...
