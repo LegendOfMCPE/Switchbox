@@ -28,15 +28,21 @@ class ProviderRegistry {
 	/** @var string */
 	public $class;
 
+    protected static $superProviders = [
+        Switchbox::TYPE_ECONOMY => EconomyProvider::class,
+        Switchbox::TYPE_CHAT => EconomyProvider::class
+    ];
+
 	public function validate(string $type) {
-		static $superPproviders = [
-			Switchbox::TYPE_ECONOMY => EconomyProvider::class,
-			Switchbox::TYPE_CHAT => EconomyProvider::class
-		];
-		if(!is_subclass_of($this->class, $super = $superPproviders[$type])) {
+		if(!is_subclass_of($this->class, $super = self::$superProviders[$type])) {
 			throw new \RuntimeException("$this->class is a $type provider but does not extend $super");
 		}
-		// TODO validate constructor
+
+		$reflect = new \ReflectionClass($this->class);
+		$params = $reflect->getConstructor()->getParameters();
+		if($reflect->getConstructor()->getNumberOfRequiredParameters() > 1 || $params[0]->getType() === null || !is_subclass_of($params[0]->getType(), Plugin::class)){
+		    throw new \RuntimeException("$this->class is a $type provider, but does not have a familiar constructor");
+        }
 	}
 
 	public function instantiate() {
