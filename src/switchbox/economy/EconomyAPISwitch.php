@@ -1,228 +1,42 @@
-<?php
+[PE Server] Server was stopped.
+[00:24:47] [Server thread/CRITICAL]: Unable to find the Zip (zip) extension.
+[00:24:47] [Server thread/WARNING]: Running PocketMine-MP with 32-bit systems/PHP is deprecated. Support for 32-bit may be dropped in the future.
+[00:24:47] [Server thread/INFO]: Loading pocketmine.yml...
+[00:24:47] [Server thread/INFO]: Loading server properties...
+[00:24:47] [Server thread/INFO]: Selected English (eng) as the base language
+[00:24:47] [Server thread/INFO]: Starting Minecraft: PE server version v1.0.6.52
+[00:24:47] [Server thread/INFO]: Opening server on 0.0.0.0:19132
+[00:24:47] [Server thread/INFO]: This server is running PocketMine-MP version 1.6.2dev "Unleashed" (API 3.0.0-ALPHA5)
+[00:24:47] [Server thread/INFO]: PocketMine-MP is distributed under the LGPL License
+[00:24:48] [Server thread/INFO]: Loading recipes...
+[00:24:48] [Server thread/INFO]: Loading resource packs...
+[00:24:48] [Server thread/INFO]: Loading d v1.11.3
+[00:24:48] [Server thread/INFO]: Enabling d v1.11.3
+[00:24:48] [Server thread/INFO]: Loading source plugin DeathView v1.0.1
+[00:24:48] [Server thread/INFO]: Loading source plugin JellyLegs v1.0.1
+[00:24:48] [Server thread/INFO]: Loading source plugin Jarvis v0.0.1
+[00:24:48] [Server thread/INFO]: Loading source plugin LevelEvent v1
+[00:24:48] [Server thread/INFO]: Loading source plugin FaceLogin v1.0.0
+[00:24:48] [Server thread/INFO]: Loading source plugin Switchbox v0.1.0
+[00:24:48] [Server thread/INFO]: Loading source plugin Mentions v1.0.0
+[00:24:48] [Server thread/INFO]: Loading source plugin Specter v0.4
+[00:24:48] [Server thread/INFO]: [d] Registered folder plugin loader
+[00:24:48] [Server thread/INFO]: Preparing level "world"
+[00:24:48] [Server thread/INFO]: Enabling DeathView v1.0.1
+[00:24:49] [Server thread/INFO]: Enabling JellyLegs v1.0.1
+[00:24:49] [Server thread/INFO]: Enabling Jarvis v0.0.1
+[00:24:49] [Server thread/INFO]: Enabling LevelEvent v1
+[00:24:49] [Server thread/INFO]: Enabling FaceLogin v1.0.0
+[00:24:49] [Server thread/INFO]: Enabling Switchbox v0.1.0
+[00:24:49] [Server thread/CRITICAL]: RuntimeException: "switchbox\api\economy\EconomyProvider is a economy provider but does not extend switchbox\api\economy\EconomyProvider" (EXCEPTION) in "/Switchbox/src/switchbox/ProviderRegistry" at line 37
+[00:24:49] [Server thread/INFO]: Disabling Switchbox v0.1.0
 
-/*
- *
- * Switchbox
- *
- * Copyright (C) 2017 LegendsOfMCPE Team
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
-*/
+Notice: Trying to get property of non-object in /storage/emulated/0/PocketMine/plugins/Switchbox/src/switchbox/Switchbox.php on line 183
+[00:24:49] [Server thread/INFO]: Enabling Mentions v1.0.0
+[00:24:49] [Server thread/INFO]: Enabling Specter v0.4
+[00:24:49] [Server thread/INFO]: Starting GS4 status listener
+[00:24:49] [Server thread/INFO]: Setting query port to 19132
+[00:24:49] [Server thread/INFO]: Query running on 0.0.0.0:19132
+[00:24:49] [Server thread/INFO]: Default game type: Survival Mode
+[00:24:49] [Server thread/INFO]: Done (1.944s)! For help, type "help" or "?"
 
-namespace switchbox\economy;
-
-use onebone\economyapi\EconomyAPI;
-use pocketmine\OfflinePlayer;
-use switchbox\api\economy\EconomyProvider;
-use switchbox\api\ProviderReply;
-use switchbox\Switchbox;
-
-class EconomyAPISwitch extends EconomyProvider {
-
-	protected $name = "EconomyAPI";
-	protected $bankSupport = false;
-
-	/** @var EconomyAPI */
-	private $plugin;
-
-	public function __construct(Switchbox $loader) {
-		parent::__construct($loader);
-		if($this->getPlugin() instanceof EconomyAPI) {
-			$this->plugin = $this->getPlugin();
-		}
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCurrencySymbol(): string {
-		if($this->plugin->isEnabled()) {
-			return $this->plugin->getMonetaryUnit();
-		}
-		return "$";
-	}
-
-	/**
-	 * @param OfflinePlayer $player
-	 *
-	 * @return bool
-	 */
-	public function hasAccount(OfflinePlayer $player): bool {
-		if($this->plugin->isEnabled()) {
-			return $this->plugin->accountExists($player->getName());
-		}
-		return false;
-	}
-
-	/**
-	 * @param OfflinePlayer $player
-	 *
-	 * @return ProviderReply
-	 */
-	public function createAccount(OfflinePlayer $player): ProviderReply {
-		if($this->plugin->isEnabled()) {
-			return new ProviderReply($this->plugin->createAccount($player->getName()));
-		}
-		return new ProviderReply(false);
-	}
-
-	/**
-	 * @param OfflinePlayer $player
-	 *
-	 * @return int
-	 */
-	public function get(OfflinePlayer $player): int {
-		if($this->plugin->isEnabled()) {
-			return $this->plugin->myMoney($player->getName());
-		}
-		return 0;
-	}
-
-	/**
-	 * @param OfflinePlayer $player
-	 * @param int           $balance
-	 *
-	 * @return bool
-	 */
-	public function has(OfflinePlayer $player, int $balance): bool {
-		if($this->plugin->isEnabled()) {
-			return $this->plugin->myMoney($player->getName()) >= $balance;
-		}
-		return false;
-	}
-
-	/**
-	 * @param OfflinePlayer $player
-	 * @param int           $amount
-	 *
-	 * @return ProviderReply
-	 */
-	public function withdraw(OfflinePlayer $player, int $amount): ProviderReply {
-		if($this->plugin->isEnabled()) {
-			return new ProviderReply($this->plugin->reduceMoney($player->getName(), $amount));
-		}
-		return new ProviderReply(false);
-	}
-
-	/**
-	 * @param OfflinePlayer $player
-	 * @param int           $amount
-	 *
-	 * @return ProviderReply
-	 */
-	public function deposit(OfflinePlayer $player, int $amount): ProviderReply {
-		if($this->plugin->isEnabled()) {
-			return new ProviderReply($this->plugin->addMoney($player->getName(), $amount));
-		}
-		return new ProviderReply(false);
-	}
-
-	/**
-	 * @param OfflinePlayer $player
-	 * @param string        $name
-	 *
-	 * @return ProviderReply
-	 */
-	public function createBank(OfflinePlayer $player, string $name = ""): ProviderReply {
-		return new ProviderReply(false);
-	}
-
-	/**
-	 * @param OfflinePlayer $player
-	 *
-	 * @return bool
-	 */
-	public function hasBank(OfflinePlayer $player): bool {
-		return false;
-	}
-
-	/**
-	 * @param OfflinePlayer $player
-	 * @param string        $name
-	 *
-	 * @return ProviderReply
-	 */
-	public function deleteBank(OfflinePlayer $player, string $name = ""): ProviderReply {
-		return new ProviderReply(false);
-	}
-
-	/**
-	 * @param OfflinePlayer $player
-	 *
-	 * @return int
-	 */
-	public function bankGet(OfflinePlayer $player): int {
-		return 0;
-	}
-
-	/**
-	 * @param OfflinePlayer $player
-	 * @param int           $amount
-	 *
-	 * @return bool
-	 */
-	public function bankHas(OfflinePlayer $player, int $amount): bool {
-		return false;
-	}
-
-	/**
-	 * @param OfflinePlayer $player
-	 * @param int           $amount
-	 *
-	 * @return ProviderReply
-	 */
-	public function bankWithdraw(OfflinePlayer $player, int $amount): ProviderReply {
-		return new ProviderReply(false);
-	}
-
-	/**
-	 * @param OfflinePlayer $player
-	 * @param int           $amount
-	 *
-	 * @return ProviderReply
-	 */
-	public function bankDeposit(OfflinePlayer $player, int $amount): ProviderReply {
-		return new ProviderReply(false);
-	}
-
-	/**
-	 * @param OfflinePlayer $player
-	 * @param string        $bankName
-	 *
-	 * @return bool
-	 */
-	public function isBankOwner(OfflinePlayer $player, string $bankName): bool {
-		return false;
-	}
-
-	/**
-	 * @param OfflinePlayer $player
-	 * @param string        $bankName
-	 *
-	 * @return bool
-	 */
-	public function isBankMember(OfflinePlayer $player, string $bankName): bool {
-		return false;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getAllBanks(): array {
-		return [];
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getAllMoney(): array {
-		if($this->plugin->isEnabled()) {
-			return $this->plugin->getAllMoney();
-		}
-		return [];
-	}
-}
