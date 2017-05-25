@@ -15,8 +15,8 @@
 
 namespace switchbox\permission;
 
-use switchbox\api\permission\PermissionProvider;
 use PurePerms\PurePerms;
+use switchbox\api\permission\PermissionProvider;
 
 class PurePermsSwitch extends PermissionProvider {
 

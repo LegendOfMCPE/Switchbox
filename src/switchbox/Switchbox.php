@@ -74,12 +74,12 @@ class Switchbox extends PluginBase implements Listener {
 	 */
 	public function hint(PluginBase $plugin, array $requirements, bool $forceDisable = false): bool {
 
-        if (!in_array($this->getName(), $plugin->getDescription()->getDepend()) && !in_array($this->getName(), $plugin->getDescription()->getSoftDepend())) {
-            $this->getLogger()->warning(
-                "The plugin " . $plugin->getName() . " is using Switchbox without depending or soft-depending on it." . PHP_EOL .
-                "If you are the developer, please add '" . $this->getName() . "' to your depend or softdepend array."
-            );
-        }
+		if(!in_array($this->getName(), $plugin->getDescription()->getDepend()) && !in_array($this->getName(), $plugin->getDescription()->getSoftDepend())) {
+			$this->getLogger()->warning(
+				"The plugin " . $plugin->getName() . " is using Switchbox without depending or soft-depending on it." . PHP_EOL .
+				"If you are the developer, please add '" . $this->getName() . "' to your depend or softdepend array."
+			);
+		}
 
 		foreach($requirements as $type => $requirement) {
 			$requirement = (array) $requirement;

@@ -19,7 +19,6 @@ use EssentialsPE\Sessions\SessionManager;
 use pocketmine\OfflinePlayer;
 use switchbox\api\chat\ChatProvider;
 use switchbox\api\ProviderReply;
-use switchbox\Switchbox;
 use xecon\Session;
 
 class EssentialsPEChatSwitch extends ChatProvider {
