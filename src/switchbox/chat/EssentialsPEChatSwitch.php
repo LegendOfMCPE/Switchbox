@@ -15,8 +15,9 @@
 
 namespace vault\chat;
 
+use EssentialsPE\Loader;
 use EssentialsPE\Sessions\SessionManager;
-use pocketmine\OfflinePlayer;
+use pocketmine\IPlayer;
 use switchbox\api\chat\ChatProvider;
 use switchbox\api\ProviderReply;
 use xecon\Session;
@@ -29,18 +30,18 @@ class EssentialsPEChatSwitch extends ChatProvider {
 	/** @var \EssentialsPE\Loader */
 	private $plugin;
 
-	public function __construct(\EssentialsPE\Loader $loader) {
+	public function __construct(Loader $loader) {
 		$this->plugin = $loader;
 		parent::__construct($loader->getServer());
 	}
 
 	/**
-	 * @param OfflinePlayer $player
+	 * @param IPlayer $player
 	 * @param string        $level
 	 *
 	 * @return string
 	 */
-	public function getNick(OfflinePlayer $player, string $level = ""): string {
+	public function getNick(IPlayer $player, string $level = ""): string {
 		if($this->plugin->isEnabled()) {
 			return SessionManager::getSession($player)->getNick();
 		}
@@ -48,13 +49,13 @@ class EssentialsPEChatSwitch extends ChatProvider {
 	}
 
 	/**
-	 * @param OfflinePlayer $player
+	 * @param IPlayer $player
 	 * @param string        $nick
 	 * @param string        $level
 	 *
 	 * @return ProviderReply
 	 */
-	public function setNick(OfflinePlayer $player, string $nick, string $level = ""): ProviderReply {
+	public function setNick(IPlayer $player, string $nick, string $level = ""): ProviderReply {
 		if($this->plugin->isEnabled()) {
 			return new ProviderReply(SessionManager::getSession($player)->setNick($nick));
 		}
@@ -62,12 +63,12 @@ class EssentialsPEChatSwitch extends ChatProvider {
 	}
 
 	/**
-	 * @param OfflinePlayer $player
+	 * @param IPlayer $player
 	 * @param string        $level
 	 *
 	 * @return string
 	 */
-	public function getPrefix(OfflinePlayer $player, string $level = ""): string {
+	public function getPrefix(IPlayer $player, string $level = ""): string {
 		if($this->plugin->isEnabled()) {
 			return SessionManager::getSession($player)->getPrefix();
 		}
@@ -75,13 +76,13 @@ class EssentialsPEChatSwitch extends ChatProvider {
 	}
 
 	/**
-	 * @param OfflinePlayer $player
+	 * @param IPlayer $player
 	 * @param string        $prefix
 	 * @param string        $level
 	 *
 	 * @return ProviderReply
 	 */
-	public function setPrefix(OfflinePlayer $player, string $prefix, string $level = ""): ProviderReply {
+	public function setPrefix(IPlayer $player, string $prefix, string $level = ""): ProviderReply {
 		if($this->plugin->isEnabled()) {
 			return new ProviderReply(SessionManager::getSession($player)->setPrefix($prefix));
 		}
@@ -89,12 +90,12 @@ class EssentialsPEChatSwitch extends ChatProvider {
 	}
 
 	/**
-	 * @param OfflinePlayer $player
+	 * @param IPlayer $player
 	 * @param string        $level
 	 *
 	 * @return string
 	 */
-	public function getSuffix(OfflinePlayer $player, string $level = ""): string {
+	public function getSuffix(IPlayer $player, string $level = ""): string {
 		if($this->plugin->isEnabled()) {
 			return SessionManager::getSession($player)->getSuffix();
 		}
@@ -102,13 +103,13 @@ class EssentialsPEChatSwitch extends ChatProvider {
 	}
 
 	/**
-	 * @param OfflinePlayer $player
+	 * @param IPlayer $player
 	 * @param string        $suffix
 	 * @param string        $level
 	 *
 	 * @return ProviderReply
 	 */
-	public function setSuffix(OfflinePlayer $player, string $suffix, string $level = ""): ProviderReply {
+	public function setSuffix(IPlayer $player, string $suffix, string $level = ""): ProviderReply {
 		if($this->plugin->isEnabled()) {
 			return new ProviderReply(SessionManager::getSession($player)->setSuffix($suffix));
 		}

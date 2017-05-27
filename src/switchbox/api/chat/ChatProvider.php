@@ -15,7 +15,7 @@
 
 namespace switchbox\api\chat;
 
-use pocketmine\OfflinePlayer;
+use pocketmine\IPlayer;
 use pocketmine\Server;
 use switchbox\api\BaseProvider;
 use switchbox\api\ProviderReply;
@@ -40,68 +40,68 @@ abstract class ChatProvider extends BaseProvider {
 	/**
 	 * Returns the nick of the given player, and in a certain world if this is supported by the chat plugin.
 	 *
-	 * @param OfflinePlayer $player
+	 * @param IPlayer $player
 	 * @param string        $level
 	 *
 	 * @return string
 	 */
-	public abstract function getNick(OfflinePlayer $player, string $level = ""): string;
+	public abstract function getNick(IPlayer $player, string $level = ""): string;
 
 	/**
 	 * Sets the nick of the given player, and in a certain world if this is supported by the chat plugin.
 	 * Returns the reply from the chat plugin.
 	 *
-	 * @param OfflinePlayer $player
+	 * @param IPlayer $player
 	 * @param string        $nick
 	 * @param string        $level
 	 *
 	 * @return ProviderReply
 	 */
-	public abstract function setNick(OfflinePlayer $player, string $nick, string $level = ""): ProviderReply;
+	public abstract function setNick(IPlayer $player, string $nick, string $level = ""): ProviderReply;
 
 	/**
 	 * Returns the prefix of the given player, and in a certain world if this is supported by the chat plugin.
 	 *
-	 * @param OfflinePlayer $player
+	 * @param IPlayer $player
 	 * @param string        $level
 	 *
 	 * @return string
 	 */
-	public abstract function getPrefix(OfflinePlayer $player, string $level = ""): string;
+	public abstract function getPrefix(IPlayer $player, string $level = ""): string;
 
 	/**
 	 * Sets the prefix of the player, and in a certain world if this is supported by the chat plugin.
 	 * Returns the reply from the chat plugin.
 	 *
-	 * @param OfflinePlayer $player
+	 * @param IPlayer $player
 	 * @param string        $prefix
 	 * @param string        $level
 	 *
 	 * @return ProviderReply
 	 */
-	public abstract function setPrefix(OfflinePlayer $player, string $prefix, string $level = ""): ProviderReply;
+	public abstract function setPrefix(IPlayer $player, string $prefix, string $level = ""): ProviderReply;
 
 	/**
 	 * Returns the suffix of the given player, and in a certain world if this is supported by the chat plugin.
 	 *
-	 * @param OfflinePlayer $player
+	 * @param IPlayer $player
 	 * @param string        $level
 	 *
 	 * @return string
 	 */
-	public abstract function getSuffix(OfflinePlayer $player, string $level = ""): string;
+	public abstract function getSuffix(IPlayer $player, string $level = ""): string;
 
 	/**
 	 * Sets the suffix of the player, and in a certain world if this is supported by the chat plugin.
 	 * Returns the reply from the chat plugin.
 	 *
-	 * @param OfflinePlayer $player
+	 * @param IPlayer $player
 	 * @param string        $suffix
 	 * @param string        $level
 	 *
 	 * @return ProviderReply
 	 */
-	public abstract function setSuffix(OfflinePlayer $player, string $suffix, string $level = ""): ProviderReply;
+	public abstract function setSuffix(IPlayer $player, string $suffix, string $level = ""): ProviderReply;
 
 	/**
 	 * Gets the prefix of a group if group support is in the chat plugin, and in a certain world if this is supported by the chat plugin.

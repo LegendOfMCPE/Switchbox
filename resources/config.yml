@@ -4,6 +4,7 @@
 # The economy plugin to use by preference. Other plugins utilizing Switchbox will also use this plugin.
 # Dummy can be entered if an economy plugin should be attempted to be detected automatically.
 Economy-Plugin: Dummy
+
 Special-Economy-Providers:
 #  ThisIsOnePlugin: EconomyAPI
 #  ThisIsAnotherPlugin: xEcon
@@ -12,6 +13,7 @@ Special-Economy-Providers:
 # The chat plugin to use by preference. Other plugins utilizing Switchbox will also use this plugin.
 # Dummy can be entered if a chat plugin should be attempted to be detected automatically.
 Chat-Plugin: Dummy
+
 Special-Chat-Providers:
 #  ThisIsOnePlugin: EssentialsPE
 #  ThisIsTerriblePlugin: Dummy

@@ -64,7 +64,7 @@ class Switchbox extends PluginBase implements Listener {
 	 *
 	 * It is recommended to call hint($this) on startup.
 	 *
-	 * NOTE: Plugins should only be added to _require() if those plugins are the only plugins that have implemented these functions.
+	 * NOTE: Plugins should only be added to _require() if those plugins are the only plugins that have implemented functions used in the plugin _require() is called in.
 	 *
 	 * @param PluginBase $plugin
 	 * @param string[]   $requirements
@@ -73,7 +73,6 @@ class Switchbox extends PluginBase implements Listener {
 	 * @return bool
 	 */
 	public function hint(PluginBase $plugin, array $requirements, bool $forceDisable = false): bool {
-
 		if(!in_array($this->getName(), $plugin->getDescription()->getDepend()) && !in_array($this->getName(), $plugin->getDescription()->getSoftDepend())) {
 			$this->getLogger()->warning(
 				"The plugin " . $plugin->getName() . " is using Switchbox without depending or soft-depending on it." . PHP_EOL .
@@ -160,6 +159,8 @@ class Switchbox extends PluginBase implements Listener {
 	/**
 	 * @param string $type
 	 * @param string $name
+	 *
+	 * @return mixed
 	 */
 	private function getProviderByName(string $type, string $name) {
 		if(!isset($this->providers[$type])) {
