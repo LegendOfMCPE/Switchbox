@@ -49,68 +49,6 @@ class Switchbox extends PluginBase implements Listener {
 	}
 
 	/**
-	 * Hints Switchbox to check for requirements specified in the plugin passed. The plugin specified should AT LEAST
-	 * have soft depend on Switchbox.
-	 *
-	 * If a requirement was not found, alerts the logger, and if specified, disables the plugin passed.
-	 *
-	 * To add required plugins to your plugin, you can add the following method (example):
-	 *
-	 * public function _require(): array {
-	 *   return ["Chat" => ["EssentialsPE", "PureChat"], "Economy" => "EconomyAPI"];
-	 * }
-	 *
-	 * If this method is added, the requirements will be checked once hint($this) gets called. Make sure to AT LEAST have soft depend on Switchbox.
-	 *
-	 * It is recommended to call hint($this) on startup.
-	 *
-	 * NOTE: Plugins should only be added to _require() if those plugins are the only plugins that have implemented functions used in the plugin _require() is called in.
-	 *
-	 * @param PluginBase $plugin
-	 * @param string[]   $requirements
-	 * @param bool       $forceDisable
-	 *
-	 * @return bool
-	 */
-	public function hint(PluginBase $plugin, array $requirements, bool $forceDisable = false): bool {
-		if(!in_array($this->getName(), $plugin->getDescription()->getDepend()) && !in_array($this->getName(), $plugin->getDescription()->getSoftDepend())) {
-			$this->getLogger()->warning(
-				"The plugin " . $plugin->getName() . " is using Switchbox without depending or soft-depending on it." . PHP_EOL .
-				"If you are the developer, please add '" . $this->getName() . "' to your depend or softdepend array."
-			);
-		}
-
-		foreach($requirements as $type => $requirement) {
-			$requirement = (array) $requirement;
-			switch($type) {
-				case "Economy":
-					if(!in_array($this->getEconomyProvider($plugin)->getName(), $requirement)) {
-						$this->getLogger()->alert(
-							"The plugin " . $plugin->getName() . " requires the economy plugin " . $requirement . " to work correctly." . PHP_EOL .
-							"Consider using " . $requirement . " to get the most out of " . $plugin->getName() . ".");
-						if($forceDisable) {
-							$plugin->setEnabled(false);
-							return true;
-						}
-					}
-					break;
-				case "Chat":
-					if(!in_array($this->getChatProvider($plugin)->getName(), $requirement)) {
-						$this->getLogger()->alert(
-							"The plugin " . $plugin->getName() . " requires the chat plugin " . $requirement . " to work correctly." . PHP_EOL .
-							"Consider using " . $requirement . " to get the most out of " . $plugin->getName() . ".");
-						if($forceDisable) {
-							$plugin->setEnabled(false);
-							return true;
-						}
-					}
-					break;
-			}
-		}
-		return true;
-	}
-
-	/**
 	 * @param Plugin $requester The plugin requesting the provider. This method may return different values for different requesters.
 	 *
 	 * @return EconomyProvider
@@ -201,7 +139,7 @@ class Switchbox extends PluginBase implements Listener {
 	public function WARNING_this_method_is_INTERNAL_do_NOT_call_me_directly_onPluginDisable(PluginDisableEvent $event) {
 		foreach($this->providers as &$typedProviders) {
 			foreach($typedProviders as $name => $providerRegistry) {
-				if($this->providers->plugin === $event->getPlugin()) {
+				if($providerRegistry->plugin === $event->getPlugin()) {
 					unset($typedProviders[$name]);
 				}
 			}

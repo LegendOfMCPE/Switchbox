@@ -16,26 +16,17 @@
 namespace switchbox\api\economy;
 
 use pocketmine\IPlayer;
-use pocketmine\Server;
 use switchbox\api\BaseProvider;
 use switchbox\api\ProviderReply;
 
 abstract class EconomyProvider extends BaseProvider {
-
-	protected $bankSupport = false;
-
-	public function __construct(Server $server) {
-		parent::__construct($server);
-	}
 
 	/**
 	 * Returns whether the current economy plugin supports banks.
 	 *
 	 * @return bool
 	 */
-	public function hasBankSupport(): bool {
-		return $this->bankSupport;
-	}
+	public abstract function hasBankSupport(): bool;
 
 	/**
 	 * Returns the currency symbol used in the current economy plugin.
@@ -45,63 +36,58 @@ abstract class EconomyProvider extends BaseProvider {
 	public abstract function getCurrencySymbol(): string;
 
 	/**
-	 * Returns whether the given OFFLINE player has an economy account with the current economy plugin.
+	 * Checks whether the player of the given name has an economy account with this economy plugin.
 	 *
-	 * @param IPlayer $player
+	 * @param AccountExistsQuery $query
 	 *
-	 * @return bool
+	 * @return bool If $callback has been called before this method returns, returns true. If $callback shall be
+	 *              called some time after this method returns, returns false.
 	 */
-	public abstract function hasAccount(IPlayer $player): bool;
+	public abstract function existsAccount(AccountExistsQuery $query): bool;
 
 	/**
-	 * Creates a new economy account for the given OFFLINE player.
+	 * Creates a new economy account for the player of the given name.
 	 *
-	 * @param IPlayer $player
+	 * @param AccountCreation $query
 	 *
-	 * @return ProviderReply
+	 * @return bool If $callback has been called before this method returns, returns true. If $callback shall be
+	 *              called some time after this method returns, returns false.
+	 *
 	 */
-	public abstract function createAccount(IPlayer $player): ProviderReply;
+	public abstract function createAccount(AccountCreation $query): bool;
 
 	/**
-	 * Returns the balance of an OFFLINE player.
+	 * Checks the balance of a player.
 	 *
-	 * @param IPlayer $player
+	 * @param BalanceQuery $query
 	 *
-	 * @return int
+	 * @return bool If $callback has been called before this method returns, returns true. If $callback shall be
+	 *              called some time after this method returns, returns false.
+	 *
 	 */
-	public abstract function get(IPlayer $player): int;
+	public abstract function checkBalance(BalanceQuery $query): bool;
 
 	/**
-	 * Returns whether the given OFFLINE player has a balance higher or equal to the given balance.
+	 * Withdraws the given amount of money from the given account.
 	 *
-	 * @param IPlayer $player
-	 * @param int           $balance
+	 * @param BalanceReduction $query
 	 *
-	 * @return bool
+	 * @return bool If $callback has been called before this method returns, returns true. If $callback shall be
+	 *              called some time after this method returns, returns false.
+	 *
 	 */
-	public abstract function has(IPlayer $player, int $balance): bool;
-
-	/**
-	 * Withdraws the given amount of money from the given OFFLINE player.
-	 * Returns the return value from the economy plugin.
-	 *
-	 * @param IPlayer $player
-	 * @param int           $amount
-	 *
-	 * @return ProviderReply
-	 */
-	public abstract function withdraw(IPlayer $player, int $amount): ProviderReply;
+	public abstract function reduceBalance(BalanceReduction $query): bool;
 
 	/**
 	 * Deposits the given amount of money to the given OFFLINE player.
 	 * Returns the return value from the economy plugin.
 	 *
 	 * @param IPlayer $player
-	 * @param int           $amount
+	 * @param int     $amount
 	 *
 	 * @return ProviderReply
 	 */
-	public abstract function deposit(IPlayer $player, int $amount): ProviderReply;
+	public abstract function increaseBalance(IPlayer $player, int $amount): ProviderReply;
 
 	/**
 	 * Creates a new bank for the given OFFLINE player with the given name.
@@ -109,7 +95,7 @@ abstract class EconomyProvider extends BaseProvider {
 	 * Returns the return value from the economy plugin.
 	 *
 	 * @param IPlayer $player
-	 * @param string        $name
+	 * @param string  $name
 	 *
 	 * @return ProviderReply
 	 */
@@ -130,7 +116,7 @@ abstract class EconomyProvider extends BaseProvider {
 	 * Returns the return value from the economy plugin.
 	 *
 	 * @param IPlayer $player
-	 * @param string        $name
+	 * @param string  $name
 	 *
 	 * @return ProviderReply
 	 */
@@ -149,7 +135,7 @@ abstract class EconomyProvider extends BaseProvider {
 	 * Returns whether the given OFFLINE player has equal to or more than the given amount of money.
 	 *
 	 * @param IPlayer $player
-	 * @param int           $amount
+	 * @param int     $amount
 	 *
 	 * @return bool
 	 */
@@ -160,7 +146,7 @@ abstract class EconomyProvider extends BaseProvider {
 	 * Returns the return value from the economy plugin.
 	 *
 	 * @param IPlayer $player
-	 * @param int           $amount
+	 * @param int     $amount
 	 *
 	 * @return ProviderReply
 	 */
@@ -171,7 +157,7 @@ abstract class EconomyProvider extends BaseProvider {
 	 * Returns the return value from the economy plugin.
 	 *
 	 * @param IPlayer $player
-	 * @param int           $amount
+	 * @param int     $amount
 	 *
 	 * @return ProviderReply
 	 */
@@ -182,7 +168,7 @@ abstract class EconomyProvider extends BaseProvider {
 	 * This method is not used for economy plugins that don't support banks with names.
 	 *
 	 * @param IPlayer $player
-	 * @param string        $bankName
+	 * @param string  $bankName
 	 *
 	 * @return bool
 	 */
@@ -193,7 +179,7 @@ abstract class EconomyProvider extends BaseProvider {
 	 * This method is not used for economy plugins that don't support banks with names.
 	 *
 	 * @param IPlayer $player
-	 * @param string        $bankName
+	 * @param string  $bankName
 	 *
 	 * @return bool
 	 */

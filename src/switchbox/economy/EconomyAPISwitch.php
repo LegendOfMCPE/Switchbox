@@ -24,7 +24,6 @@ use switchbox\Switchbox;
 class EconomyAPISwitch extends EconomyProvider {
 
 	protected $name = "EconomyAPI";
-	protected $bankSupport = false;
 
 	/** @var EconomyAPI */
 	private $plugin;
@@ -75,7 +74,7 @@ class EconomyAPISwitch extends EconomyProvider {
 	 *
 	 * @return int
 	 */
-	public function get(IPlayer $player): int {
+	public function checkBalance(IPlayer $player): int {
 		if($this->plugin->isEnabled()) {
 			return $this->plugin->myMoney($player->getName());
 		}
@@ -101,7 +100,7 @@ class EconomyAPISwitch extends EconomyProvider {
 	 *
 	 * @return ProviderReply
 	 */
-	public function withdraw(IPlayer $player, int $amount): ProviderReply {
+	public function reduceBalance(IPlayer $player, int $amount): ProviderReply {
 		if($this->plugin->isEnabled()) {
 			return new ProviderReply($this->plugin->reduceMoney($player->getName(), $amount));
 		}
@@ -114,7 +113,7 @@ class EconomyAPISwitch extends EconomyProvider {
 	 *
 	 * @return ProviderReply
 	 */
-	public function deposit(IPlayer $player, int $amount): ProviderReply {
+	public function increaseBalance(IPlayer $player, int $amount): ProviderReply {
 		if($this->plugin->isEnabled()) {
 			return new ProviderReply($this->plugin->addMoney($player->getName(), $amount));
 		}
